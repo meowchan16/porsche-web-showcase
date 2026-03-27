@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Porsche 911 GT3 RS</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* BASE STYLES - Kept identical to your 718 layout */
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      color: white;
+      background-color: #091413;
+      overflow-x: hidden;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    body.slide-out {
+      opacity: 0;
+      transform: translateX(80px);
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 9999;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(10px);
+      color: white;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      text-align: center;
+      padding-top: 120px;
+      min-height: 100vh;
+      position: relative;
+      /* Using the same green gradient as requested */
+      background: radial-gradient(circle at center, #408A71 0%, #285A48 40%, #091413 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .bg-text {
+      position: absolute;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: clamp(60px, 12vw, 150px);
+      font-weight: 900;
+      color: rgba(255,255,255,0.05);
+      z-index: 0;
+      white-space: nowrap;
+    }
+
+    .car-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-top: 40px;
+      width: 80%;
+      max-width: 900px;
+    }
+
+    .car-wrapper::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, rgba(176,228,204,0.25), transparent 70%);
+      filter: blur(60px);
+      z-index: 0;
+    }
+
+    .car-img {
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      border-radius: 12px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    }
+
+    .hero-text {
+      margin-top: 60px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 800;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    .tag {
+      background: rgba(0,0,0,0.6);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .btn {
+      margin-top: 25px;
+      padding: 12px 28px;
+      border: 1px solid #B0E4CC;
+      background: transparent;
+      color: #B0E4CC;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .btn:hover {
+      background: #B0E4CC;
+      color: #091413;
+    }
+
+    /* SPECS SECTION */
+    .specs-section {
+      display: flex;
+      align-items: center;
+      padding: 100px 10%;
+      background: linear-gradient(to bottom, #E8F7F1, #B0E4CC);
+      color: black;
+      min-height: 100vh;
+      gap: 50px;
+    }
+
+    .specs-text { flex: 1; }
+    .spec { margin-bottom: 50px; }
+    .spec h2 { font-size: clamp(40px, 5vw, 60px); font-weight: 900; margin: 0; }
+    .spec p { color: #2f4f4f; font-size: 14px; margin: 5px 0 0; font-weight: 600; }
+
+    .specs-image { flex: 1; display: flex; justify-content: center; }
+    .specs-image video {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 16px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+      object-fit: cover;
+    }
+
+    /* STORY SECTION */
+    .story-section {
+      position: relative;
+      padding: 120px 10%;
+      background: #B0E4CC;
+      color: #091413;
+    }
+
+    .img-top {
+      width: 100%;
+      max-width: 800px;
+      border-radius: 20px;
+      margin-bottom: 80px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    }
+
+    .story-content-wrapper { display: flex; gap: 50px; align-items: flex-start; }
+    .story-text { flex: 1; }
+    .story-text h2 { font-size: clamp(36px, 4vw, 52px); font-weight: 900; line-height: 1.1; margin-bottom: 40px; }
+    .story-text .lead { font-size: 20px; font-weight: 700; margin-bottom: 25px; line-height: 1.5; }
+    .story-text p { font-size: 17px; line-height: 1.8; color: #285A48; margin-bottom: 20px; }
+
+    .story-images { flex: 1; display: flex; flex-direction: column; gap: 40px; align-items: flex-end; }
+    .story-images img { width: 100%; max-width: 500px; border-radius: 20px; box-shadow: 0 40px 80px rgba(0,0,0,0.2); }
+
+    @media (max-width: 900px) {
+      .specs-section { flex-direction: column; padding: 60px 5%; text-align: center; }
+      .story-content-wrapper { flex-direction: column; }
+      .story-images { align-items: center; }
+    }
+  </style>
+</head>
+
+<body>
+
+<button class="back-btn" onclick="goBack()" aria-label="Go Back">←</button>
+
+<main>
+  <section class="hero">
+    <div class="bg-text">GT3 RS</div> 
+    
+    <div class="car-wrapper">
+      <img src="gt3rs_front.png" class="car-img" alt="Porsche 911 GT3 RS">
+    </div>
+    
+    <div class="hero-text">
+      <h1>911 GT3 RS</h1>
+      <span class="tag">Gasoline</span><br>
+      <button class="btn">Change model variant</button>
+    </div>
+  </section>
+
+  <section class="specs-section">
+    <div class="specs-text">
+      <div class="spec"><h2>3.2 s</h2><p>Acceleration 0 - 100 km/h</p></div>
+      <div class="spec"><h2>386 kW / 525 PS</h2><p>Power</p></div>
+      <div class="spec"><h2>296 km/h</h2><p>Top speed</p></div>
+    </div>
+    <div class="specs-image">
+      <video src="911_engine_video.mp4" autoplay loop muted playsinline></video>
+    </div>
+  </section>
+
+  <section class="story-section">
+    <img src="911_detail1.png" class="img-top" alt="911 Details">
+
+    <div class="story-content-wrapper">
+      <div class="story-text">
+        <h2>Built for the Track.<br>Legal for the Road.</h2>
+        
+        <p class="lead">Performance is not a goal. It is a state of being.</p>
+        
+        <p>The 911 GT3 RS is designed for one thing: uncompromised performance on the circuit. With its massive rear wing and active aerodynamics (DRS), it creates levels of downforce previously reserved for pure racing cars.</p>
+
+        <p>At its heart lies a 4.0-liter high-revving naturally aspirated engine that screams all the way to 9,000 rpm. Every vent, every fin, and every carbon fiber component serves a singular purpose—speed.</p>
+
+        <div style="margin-top: 60px; padding-top: 30px; border-top: 2px solid rgba(40, 90, 72, 0.3);">
+          <h3 style="font-size: 26px; font-weight: 800; margin-bottom: 15px; color: #1a3d31;">The Art of Engineering</h3>
+          <p>This is where precision meets passion. From the adjustable suspension controls on the steering wheel to the lightweight magnesium wheels, the GT3 RS is a masterpiece of technical brilliance.</p>
+        </div>
+      </div>
+
+      <div class="story-images">
+        <img src="911_detail2.png" alt="911 Detail">
+        <img src="911_detail3.png" alt="911 Interior">
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+function goBack() {
+  document.body.classList.add("slide-out");
+  setTimeout(() => {
+    // Ensure this points back to your main menu
+    window.location.href = "911_selection.html"; 
+  }, 400); 
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>911 Turbo S</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* BASE STYLES */
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      color: white;
+      background-color: #0A0A0A; /* Obsidian Black */
+      overflow-x: hidden;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    body.slide-out {
+      opacity: 0;
+      transform: translateX(80px);
+    }
+
+    /* BACK BUTTON */
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 9999;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(10px);
+      color: white;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      text-align: center;
+      padding-top: 120px;
+      min-height: 100vh;
+      position: relative;
+      /* Elegant Gold/Amber gradient */
+      background: radial-gradient(circle at center, #2C2418 0%, #14110C 40%, #0A0A0A 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .bg-text {
+      position: absolute;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: clamp(80px, 12vw, 180px);
+      font-weight: 900;
+      color: rgba(212, 175, 55, 0.03); /* Faint Gold text */
+      z-index: 0;
+      white-space: nowrap;
+    }
+
+    .car-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-top: 40px;
+      width: 85%;
+      max-width: 950px;
+    }
+
+    .car-wrapper::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.1), transparent 70%);
+      filter: blur(80px);
+      z-index: 0;
+    }
+
+    .car-img {
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      border-radius: 12px;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.9);
+    }
+
+    .hero-text {
+      margin-top: 60px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 800;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    .tag {
+      background: #D4AF37; /* Luxury Gold Tag */
+      color: #000;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 900;
+      display: inline-block;
+      margin-top: 10px;
+      text-transform: uppercase;
+    }
+
+    .btn {
+      margin-top: 25px;
+      padding: 12px 28px;
+      border: 1px solid #D4AF37;
+      background: transparent;
+      color: #D4AF37;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+      text-transform: uppercase;
+    }
+
+    .btn:hover {
+      background: #D4AF37;
+      color: #000;
+    }
+
+    /* SPECS SECTION */
+    .specs-section {
+      display: flex;
+      align-items: center;
+      padding: 100px 10%;
+      background: linear-gradient(to bottom, #111, #000);
+      color: white;
+      min-height: 100vh;
+      gap: 50px;
+    }
+
+    .specs-text {
+      flex: 1;
+    }
+
+    .spec {
+      margin-bottom: 50px;
+      border-left: 2px solid #D4AF37;
+      padding-left: 25px;
+    }
+
+    .spec h2 {
+      font-size: clamp(40px, 5vw, 60px);
+      font-weight: 900;
+      margin: 0;
+    }
+
+    .spec p {
+      color: #888;
+      font-size: 14px;
+      margin: 5px 0 0;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .specs-image {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .specs-image video {
+      width: 100%;
+      max-width: 650px;
+      border-radius: 12px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+      object-fit: cover;
+    }
+
+    /* STORY SECTION */
+    .story-section {
+      position: relative;
+      padding: 120px 10%;
+      background: #111111;
+      color: white;
+    }
+
+    .img-top {
+      width: 100%;
+      max-width: 900px;
+      border-radius: 12px;
+      margin-bottom: 80px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    }
+
+    .story-content-wrapper {
+      display: flex;
+      gap: 50px;
+      align-items: flex-start;
+    }
+
+    .story-text {
+      flex: 1;
+    }
+
+    .story-text h2 {
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 40px;
+      color: #D4AF37;
+    }
+
+    .story-text .lead {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 25px;
+      font-style: italic;
+    }
+
+    .story-text p {
+      font-size: 17px;
+      line-height: 1.8;
+      color: #BBB;
+      margin-bottom: 20px;
+    }
+
+    .story-images {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .story-images img {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 12px;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+    }
+
+    @media (max-width: 900px) {
+      .specs-section { flex-direction: column; text-align: center; }
+      .spec { border-left: none; padding-left: 0; }
+      .story-content-wrapper { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+
+<button class="back-btn" onclick="goBack()">←</button>
+
+<main>
+  <section class="hero">
+    <div class="bg-text">TURBO S</div>
+    <div class="car-wrapper">
+      <img src="911turbo_front.png" class="car-img" alt="911 Turbo S Exterior">
+    </div>
+    <div class="hero-text">
+      <h1>911 Turbo S</h1>
+      <span class="tag">Twin-Turbocharged</span><br>
+      <button class="btn">Unleash the Force</button>
+    </div>
+  </section>
+
+  <section class="specs-section">
+    <div class="specs-text">
+      <div class="spec"><h2>2.7 s</h2><p>0 - 100 km/h with Sport Chrono</p></div>
+      <div class="spec"><h2>478 kW / 650 PS</h2><p>Twin-Turbo Flat-Six</p></div>
+      <div class="spec"><h2>330 km/h</h2><p>Maximum Velocity</p></div>
+    </div>
+    <div class="specs-image">
+      <video src="turbo_active_aero.mp4" autoplay loop muted playsinline></video>
+    </div>
+  </section>
+
+  <section class="story-section">
+    <img src="turbo_rear.png" class="img-top" alt="Wide-body 911 Turbo S">
+
+    <div class="story-content-wrapper">
+      <div class="story-text">
+        <h2>Power.<br>Uncompromised.</h2>
+        
+        <p class="lead">The ultimate intersection of supercar speed and luxury refinement.</p>
+        
+        <p>The 911 Turbo S is the titan of the 911 range. It produces a massive 800 Nm of torque, delivered to all four wheels through an enhanced 8-speed PDK. This allows the car to vanish into the distance with a 0-100 km/h time that rivals the world’s most exclusive hypercars.</p>
+
+        <p>But power is nothing without control. Featuring Porsche Active Aerodynamics (PAA) and rear-axle steering, the Turbo S remains incredibly stable at high speeds while being nimble enough for the tightest mountain passes.</p>
+
+        <div style="margin-top: 60px; padding-top: 30px; border-top: 2px solid rgba(212, 175, 55, 0.2);">
+          <h3 style="font-size: 26px; font-weight: 800; margin-bottom: 15px; color: #D4AF37;">Precision in Every Fiber</h3>
+          <p>Inside, the Turbo S offers a leather-clad sanctuary. From the stitching on the dashboard to the carbon fiber trim, every detail is a testament to Porsche's commitment to quality. It is a car that can break track records in the morning and take you across a continent by sunset.</p>
+        </div>
+      </div>
+
+      <div class="story-images">
+        <img src="turbo_wheel.png" alt="Turbo S Center Lock Wheels">
+        <img src="turbo_interior.png" alt="Premium Turbo S Interior">
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+function goBack() {
+  document.body.classList.add("slide-out");
+  setTimeout(() => {
+    window.location.href = "911.html"; 
+  }, 400); 
+}
+</script>
+
+</body>
+</html>
